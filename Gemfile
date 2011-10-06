@@ -23,7 +23,7 @@ group :openid do
 end
 
 group :rmagick do
-  gem "rmagick", "~> 1.15.17"
+  gem "rmagick", "~> 2.13.1"
 end
 
 # Use the commented pure ruby gems, if you have not the needed prerequisites on

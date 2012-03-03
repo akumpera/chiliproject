@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -36,9 +37,9 @@ class CalendarsController < ApplicationController
     if @query.valid?
       events = []
       events += @query.issues(:include => [:tracker, :assigned_to, :priority],
-                              :conditions => ["((start_date BETWEEN ? AND ?) OR (due_date BETWEEN ? AND ?))", @calendar.startdt, @calendar.enddt, @calendar.startdt, @calendar.enddt]
+                              :conditions => ["((#{Issue.table_name}.start_date BETWEEN ? AND ?) OR (#{Issue.table_name}.due_date BETWEEN ? AND ?))", @calendar.startdt, @calendar.enddt, @calendar.startdt, @calendar.enddt]
                               )
-      events += @query.versions(:conditions => ["effective_date BETWEEN ? AND ?", @calendar.startdt, @calendar.enddt])
+      events += @query.versions(:conditions => ["#{Version.table_name}.effective_date BETWEEN ? AND ?", @calendar.startdt, @calendar.enddt])
 
       @calendar.events = events
     end

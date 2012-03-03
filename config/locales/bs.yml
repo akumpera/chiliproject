@@ -790,7 +790,7 @@ bs:
   text_enumeration_destroy_question: "Za %{count} objekata je dodjeljenja ova vrijednost."
   text_enumeration_category_reassign_to: 'Ponovo im dodjeli ovu vrijednost:'
   text_email_delivery_not_configured: "Email dostava nije konfiguraisana, notifikacija je onemogućena.\nKonfiguriši SMTP server u config/configuration.yml i restartuj aplikaciju nakon toga."
-  text_repository_usernames_mapping: "Odaberi ili ispravi redmine korisnika mapiranog za svako korisničko ima nađeno u logu repozitorija.\nKorisnici sa istim imenom u redmineu i u repozitoruju se automatski mapiraju."
+  text_repository_usernames_mapping: "Odaberi ili ispravi ChiliProject korisnika mapiranog za svako korisničko ima nađeno u logu repozitorija.\nKorisnici sa istim imenom u ChiliProjectu i u repozitoruju se automatski mapiraju."
   text_diff_truncated: '... Ovaj prikaz razlike je odsječen pošto premašuje maksimalnu veličinu za prikaz'
   text_custom_field_possible_values_info: 'Jedna linija za svaku vrijednost'
 
@@ -979,3 +979,35 @@ bs:
   text_mercurial_repo_example: local repository (e.g. /hgrepo, c:\hgrepo)
   label_diff: diff
   setting_issue_startdate_is_adddate: Use current date as start date for new issues
+  description_search: Searchfield
+  description_user_mail_notification: Mail notification settings
+  description_date_range_list: Choose range from list
+  description_date_to: Enter end date
+  description_query_sort_criteria_attribute: Sort attribute
+  description_message_content: Message content
+  description_wiki_subpages_reassign: Choose new parent page
+  description_available_columns: Available Columns
+  description_selected_columns: Selected Columns
+  description_date_range_interval: Choose range by selecting start and end date
+  description_project_scope: Search scope
+  description_issue_category_reassign: Choose issue category
+  description_query_sort_criteria_direction: Sort direction
+  description_notes: Notes
+  description_filter: Filter
+  description_choose_project: Projects
+  description_date_from: Enter start date
+  label_deleted_custom_field: (deleted custom field)
+  field_custom_filter: Custom LDAP filter
+  text_display_subprojects: Display subprojects
+  text_current_project: Current project
+  label_toc: Contents
+  search_input_placeholder: search ...
+  setting_mail_handler_confirmation_on_success: Send confirmation email on successful incoming email
+  label_mail_handler_confirmation: "Confirmation of email submission: %{subject}"
+  label_mail_handler_errors_with_submission: "There were errors with your email submission:"
+  label_document_watchers: Watchers
+  setting_mail_handler_confirmation_on_failure: Send confirmation email on failed incoming email
+  label_between: between
+  label_mail_handler_failure: "Failed email submission: %{subject}"
+  notice_not_authorized_action: You are not authorized to perform this action.
+  text_mail_handler_confirmation_successful: Your email has been successful added at the following url

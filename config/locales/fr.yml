@@ -793,6 +793,7 @@ fr:
   label_user_search: "Rechercher un utilisateur :"
   label_additional_workflow_transitions_for_author: Autorisations supplémentaires lorsque l'utilisateur a créé la demande
   label_additional_workflow_transitions_for_assignee: Autorisations supplémentaires lorsque la demande est assignée à l'utilisateur
+  label_deleted_custom_field: '(champ personnalisé supprimé)'
 
   button_login: Connexion
   button_submit: Soumettre
@@ -858,7 +859,7 @@ fr:
   text_tip_issue_begin_day: tâche commençant ce jour
   text_tip_issue_end_day: tâche finissant ce jour
   text_tip_issue_begin_end_day: tâche commençant et finissant ce jour
-  text_project_identifier_info: 'Seuls les lettres minuscules (a-z), chiffres, tirets et tirets bas sont autorisés.<br />Un fois sauvegardé, l''identifiant ne pourra plus être modifié.'
+  text_project_identifier_info: 'Seuls les lettres minuscules (a-z), chiffres, tirets et tirets bas sont autorisés, doit commencer par une minuscule.<br />Un fois sauvegardé, l''identifiant ne pourra plus être modifié.'
   text_caracters_maximum: "%{count} caractères maximum."
   text_caracters_minimum: "%{count} caractères minimum."
   text_length_between: "Longueur comprise entre %{min} et %{max} caractères."
@@ -892,7 +893,7 @@ fr:
   text_enumeration_destroy_question: "Cette valeur est affectée à %{count} objets."
   text_enumeration_category_reassign_to: 'Réaffecter les objets à cette valeur:'
   text_email_delivery_not_configured: "L'envoi de mail n'est pas configuré, les notifications sont désactivées.\nConfigurez votre serveur SMTP dans config/configuration.yml et redémarrez l'application pour les activer."
-  text_repository_usernames_mapping: "Vous pouvez sélectionner ou modifier l'utilisateur Redmine associé à chaque nom d'utilisateur figurant dans l'historique du dépôt.\nLes utilisateurs avec le même identifiant ou la même adresse mail seront automatiquement associés."
+  text_repository_usernames_mapping: "Vous pouvez sélectionner ou modifier l'utilisateur ChiliProject associé à chaque nom d'utilisateur figurant dans l'historique du dépôt.\nLes utilisateurs avec le même identifiant ou la même adresse mail seront automatiquement associés."
   text_diff_truncated: '... Ce différentiel a été tronqué car il excède la taille maximale pouvant être affichée.'
   text_custom_field_possible_values_info: 'Une ligne par valeur'
   text_wiki_page_destroy_question: "Cette page possède %{descendants} sous-page(s) et descendante(s). Que voulez-vous faire ?"
@@ -983,3 +984,34 @@ fr:
   label_notify_member_plural: Email issue updates
   label_path_encoding: Path encoding
   text_mercurial_repo_example: local repository (e.g. /hgrepo, c:\hgrepo)
+  description_search: Searchfield
+  description_user_mail_notification: Mail notification settings
+  description_date_range_list: Choose range from list
+  description_date_to: Enter end date
+  description_query_sort_criteria_attribute: Sort attribute
+  description_message_content: Message content
+  description_wiki_subpages_reassign: Choose new parent page
+  description_available_columns: Available Columns
+  description_selected_columns: Selected Columns
+  description_date_range_interval: Choose range by selecting start and end date
+  description_project_scope: Search scope
+  description_issue_category_reassign: Choose issue category
+  description_query_sort_criteria_direction: Sort direction
+  description_notes: Notes
+  description_filter: Filter
+  description_choose_project: Projects
+  description_date_from: Enter start date
+  field_custom_filter: Custom LDAP filter
+  text_display_subprojects: Display subprojects
+  text_current_project: Current project
+  label_toc: Contents
+  search_input_placeholder: search ...
+  setting_mail_handler_confirmation_on_success: Send confirmation email on successful incoming email
+  label_mail_handler_confirmation: "Confirmation of email submission: %{subject}"
+  label_mail_handler_errors_with_submission: "There were errors with your email submission:"
+  label_document_watchers: Watchers
+  setting_mail_handler_confirmation_on_failure: Send confirmation email on failed incoming email
+  label_between: between
+  label_mail_handler_failure: "Failed email submission: %{subject}"
+  notice_not_authorized_action: You are not authorized to perform this action.
+  text_mail_handler_confirmation_successful: Your email has been successful added at the following url

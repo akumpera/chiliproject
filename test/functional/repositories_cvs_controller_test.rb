@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -188,7 +189,6 @@ class RepositoriesCvsControllerTest < ActionController::TestCase
                                }
     end
   else
-    puts "CVS test repository NOT FOUND. Skipping functional tests !!!"
-    def test_fake; assert true end
+    should "CVS test repository not found."
   end
 end

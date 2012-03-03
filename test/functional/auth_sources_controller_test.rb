@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -12,6 +13,12 @@
 #++
 
 require File.expand_path('../../test_helper', __FILE__)
+
+# Remove to_s on the TreeNode. This would cause an error on Ruby 1.9 as the
+# method has a bug preventing it to return strings. It is implicitly called by
+# shoulda during an inspect on Ruby 1.9 only. The bug is reported at
+# http://rubyforge.org/tracker/index.php?func=detail&aid=29435&group_id=1215&atid=4793
+Tree::TreeNode.class_eval {remove_method :to_s}
 
 class AuthSourcesControllerTest < ActionController::TestCase
   fixtures :all

@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -15,6 +16,7 @@ class WatchersController < ApplicationController
   before_filter :find_project
   before_filter :require_login, :check_project_privacy, :only => [:watch, :unwatch]
   before_filter :authorize, :only => [:new, :destroy]
+  before_filter :authorize_access_to_object, :only => [:new, :destroy]
 
   verify :method => :post,
          :only => [ :watch, :unwatch ],
@@ -33,9 +35,12 @@ class WatchersController < ApplicationController
   end
 
   def new
-    @watcher = Watcher.new(params[:watcher])
-    @watcher.watchable = @watched
-    @watcher.save if request.post?
+    params[:user_ids].each do |user_id|
+      @watcher = Watcher.new((params[:watcher] || {}).merge({:user_id => user_id}))
+      @watcher.watchable = @watched
+      @watcher.save if request.post?
+    end if params[:user_ids].present?
+
     respond_to do |format|
       format.html { redirect_to :back }
       format.js do
@@ -49,7 +54,7 @@ class WatchersController < ApplicationController
   end
 
   def destroy
-    @watched.set_watcher(User.find(params[:user_id]), false) if request.post?
+    @watched.set_watcher(Principal.find(params[:user_id]), false) if request.post?
     respond_to do |format|
       format.html { redirect_to :back }
       format.js do
@@ -93,4 +98,24 @@ private
   rescue ::ActionController::RedirectBackError
     render :text => (watching ? 'Watcher added.' : 'Watcher removed.'), :layout => true
   end
+
+  def authorize_access_to_object
+    permission = ''
+    case params[:action]
+    when 'new'
+      permission << 'add_'
+    when 'destroy'
+      permission << 'delete_'
+    end
+
+    # Ends up like: :delete_wiki_page_watchers
+    permission << "#{@watched.class.name.underscore}_watchers"
+
+    if User.current.allowed_to?(permission.to_sym, @project)
+      return true
+    else
+      deny_access
+    end
+  end
+
 end

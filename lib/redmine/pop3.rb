@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -17,8 +18,20 @@ module Redmine
   module POP3
     class << self
       def check(pop_options={}, options={})
+        if pop_options[:ssl]
+          ssl = true
+          if pop_options[:ssl] == 'force'
+            Net::POP3.enable_ssl(OpenSSL::SSL::VERIFY_NONE)
+          else
+            Net::POP3.enable_ssl(OpenSSL::SSL::VERIFY_PEER)
+          end
+        else
+          ssl = false
+        end
+
         host = pop_options[:host] || '127.0.0.1'
-        port = pop_options[:port] || '110'
+        port = pop_options[:port]
+        port ||= ssl ? '995' : '110'
         apop = (pop_options[:apop].to_s == '1')
         delete_unprocessed = (pop_options[:delete_unprocessed].to_s == '1')
 

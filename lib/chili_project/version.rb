@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -16,8 +17,8 @@ require 'rexml/document'
 module ChiliProject
   module VERSION #:nodoc:
 
-    MAJOR = 2
-    MINOR = 3
+    MAJOR = 3
+    MINOR = 0
     PATCH = 0
     TINY  = PATCH # Redmine compat
 
@@ -37,24 +38,14 @@ module ChiliProject
     end
 
     def self.revision
-      revision = nil
-      entries_path = "#{RAILS_ROOT}/.svn/entries"
-      if File.readable?(entries_path)
-        begin
-          f = File.open(entries_path, 'r')
-          entries = f.read
-          f.close
-     	  if entries.match(%r{^\d+})
-     	    revision = $1.to_i if entries.match(%r{^\d+\s+dir\s+(\d+)\s})
-     	  else
-   	        xml = REXML::Document.new(entries)
-   	        revision = xml.elements['wc-entries'].elements[1].attributes['revision'].to_i
-   	      end
-   	    rescue
-   	      # Could not find the current revision
-   	    end
- 	  end
- 	  revision
+      @revision ||= begin
+        git = Redmine::Scm::Adapters::GitAdapter
+        git_dir = Rails.root.join('.git')
+
+        if File.directory? git_dir
+          git.send(:shellout, "#{git.sq_bin} --git-dir=\"#{git_dir}\" rev-parse --short=9 HEAD") { |io| io.read }.to_s.chomp
+        end
+      end
     end
 
     REVISION = self.revision

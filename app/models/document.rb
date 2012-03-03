@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -23,6 +24,7 @@ class Document < ActiveRecord::Base
       end)
 
   acts_as_searchable :columns => ['title', "#{table_name}.description"], :include => :project
+  acts_as_watchable
 
   validates_presence_of :project, :title, :category
   validates_length_of :title, :maximum => 60
@@ -46,5 +48,11 @@ class Document < ActiveRecord::Base
       @updated_on = (a && a.created_on) || created_on
     end
     @updated_on
+  end
+
+  def recipients
+    mails = super # from acts_as_event
+    mails += watcher_recipients
+    mails.uniq
   end
 end

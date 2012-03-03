@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -21,6 +22,7 @@ class NewsTest < ActiveSupport::TestCase
 
 
   def setup
+    super
   end
 
   def test_create_should_send_email_notification
@@ -29,7 +31,7 @@ class NewsTest < ActiveSupport::TestCase
     news = Project.find(:first).news.new(valid_news)
 
     assert news.save
-    assert_equal 1, ActionMailer::Base.deliveries.size
+    assert_equal 2, ActionMailer::Base.deliveries.size
   end
 
   def test_should_include_news_for_projects_with_news_enabled

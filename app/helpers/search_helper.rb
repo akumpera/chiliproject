@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -43,6 +44,7 @@ module SearchHelper
     options << [l(:label_my_projects), 'my_projects'] unless User.current.memberships.empty?
     options << [l(:label_and_its_subprojects, @project.name), 'subprojects'] unless @project.nil? || @project.descendants.active.empty?
     options << [@project.name, ''] unless @project.nil?
+    label_tag("scope", l(:description_project_scope), :class => "hidden-for-sighted") +
     select_tag('scope', options_for_select(options, params[:scope].to_s)) if options.size > 1
   end
 

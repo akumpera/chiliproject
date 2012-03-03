@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -20,6 +21,11 @@ class Group < Principal
   validates_presence_of :lastname
   validates_uniqueness_of :lastname, :case_sensitive => false
   validates_length_of :lastname, :maximum => 30
+
+  # Returns an array of all of the email addresses of the group's users
+  def mails
+    users.collect(&:mail)
+  end
 
   def to_s
     lastname.to_s

@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -15,8 +16,8 @@ class UsersController < ApplicationController
   layout 'admin'
 
   before_filter :require_admin, :except => :show
-  before_filter :find_user, :only => [:show, :edit, :update, :edit_membership, :destroy_membership]
-  accept_key_auth :index, :show, :create, :update
+  before_filter :find_user, :only => [:show, :edit, :update, :destroy, :edit_membership, :destroy_membership]
+  accept_key_auth :index, :show, :create, :update, :destroy
 
   include SortHelper
   include CustomFieldsHelper
@@ -177,9 +178,35 @@ class UsersController < ApplicationController
     redirect_to :controller => 'users', :action => 'edit', :id => @user
   end
 
+  verify :method => :delete, :only => :destroy, :render => {:nothing => true, :status => :method_not_allowed }
+  def destroy
+    # Only allow to delete users with STATUS_REGISTERED for now
+    # It is assumed that these users are not yet references in any way
+    # from other objects.
+    return render_403 unless @user.deletable?
+
+    @user.destroy
+    respond_to do |format|
+      format.html {
+        flash[:notice] = l(:notice_successful_delete)
+        redirect_back_or_default(:action => 'index')
+      }
+      format.api  { head :ok }
+    end
+  end
+
+
   def edit_membership
-    @membership = Member.edit_membership(params[:membership_id], params[:membership], @user)
-    @membership.save if request.post?
+    if params[:project_ids] # Multiple memberships, one per project
+      params[:project_ids].each do |project_id|
+        @membership = Member.edit_membership(params[:membership_id], (params[:membership] || {}).merge(:project_id => project_id), @user)
+        @membership.save if request.post?
+      end
+    else # Single membership
+      @membership = Member.edit_membership(params[:membership_id], params[:membership], @user)
+      @membership.save if request.post?
+    end
+
     respond_to do |format|
       if @membership.valid?
         format.html { redirect_to :controller => 'users', :action => 'edit', :id => @user, :tab => 'memberships' }

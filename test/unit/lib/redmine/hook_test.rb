@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -143,14 +144,14 @@ class Redmine::Hook::ManagerTest < ActiveSupport::TestCase
     issue = Issue.find(1)
 
     ActionMailer::Base.deliveries.clear
-    Mailer.deliver_issue_add(issue)
+    Mailer.deliver_issue_add(issue, 'jsmith@somenet.foo')
     mail = ActionMailer::Base.deliveries.last
 
     @hook_module.add_listener(TestLinkToHook)
     hook_helper.call_hook(:view_layouts_base_html_head)
 
     ActionMailer::Base.deliveries.clear
-    Mailer.deliver_issue_add(issue)
+    Mailer.deliver_issue_add(issue, 'jsmith@somenet.foo')
     mail2 = ActionMailer::Base.deliveries.last
 
     assert_equal mail.body, mail2.body

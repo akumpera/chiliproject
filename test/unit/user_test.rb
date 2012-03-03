@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -171,6 +172,14 @@ class UserTest < ActiveSupport::TestCase
 
     user = User.try_to_login("jsmith", "jsmith")
     assert_equal nil, user
+  end
+
+  def test_error_on_active_to_registered
+    user = User.try_to_login("jsmith", "jsmith")
+    assert_equal @jsmith, user
+
+    @jsmith.status = User::STATUS_REGISTERED
+    assert !@jsmith.save
   end
 
   context ".try_to_login" do

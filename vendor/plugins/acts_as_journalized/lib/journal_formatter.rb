@@ -1,3 +1,4 @@
+#-- encoding: UTF-8
 # This file is part of the acts_as_journalized plugin for the redMine
 # project management software
 #
@@ -27,6 +28,7 @@ module JournalFormatter
   include CustomFieldsHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::UrlHelper
+  include ActionView::Helpers::TextHelper
   include ActionController::UrlWriter
   extend Redmine::I18n
 
@@ -83,9 +85,15 @@ module JournalFormatter
   end
 
   def format_custom_value_detail(custom_field, values, no_html)
-    label = custom_field.name
-    old_value = format_value(values.first, custom_field.field_format) if values.first
-    value = format_value(values.last, custom_field.field_format) if values.last
+    if custom_field
+      label = custom_field.name
+      old_value = format_value(values.first, custom_field.field_format) if values.first
+      value = format_value(values.last, custom_field.field_format) if values.last
+    else
+      label = l(:label_deleted_custom_field)
+      old_value = values.first
+      value = values.last
+    end
 
     [label, old_value, value]
   end
@@ -115,6 +123,16 @@ module JournalFormatter
     [label, old_value, value]
   end
 
+  # Formats a detail to be used with a Journal diff
+  #
+  # Truncates the content. Adds a link to view a diff.
+  def format_html_diff_detail(key, label, old_value, value)
+    link = link_to(l(:label_more), {:controller => 'journals', :action => 'diff', :id => id, :field => key.to_s}, :class => 'lightbox-ajax')
+    old_value = truncate(old_value, :length => 80)
+    value = truncate(value, :length => 80) + " " + link
+    [old_value, value]
+  end
+  
   def property(detail)
     key = prop_key(detail)
     if key.start_with? "custom_values"
@@ -179,6 +197,9 @@ module JournalFormatter
     unless no_html
       label, old_value, value = *format_html_detail(label, old_value, value)
       value = format_html_attachment_detail(key.sub("attachments", ""), value) if attachment_detail
+      if property(detail) == :attribute && key == "description"
+        old_value, value = *format_html_diff_detail(key, label, old_value, value)
+      end
     end
 
     unless value.blank?

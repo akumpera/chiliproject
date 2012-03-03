@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -29,7 +30,8 @@ class Message < ActiveRecord::Base
                     {:id => msg.parent_id, :r => msg.id, :anchor => "message-#{msg.id}"}
                   end.reverse_merge :controller => 'messages', :action => 'show', :board_id => msg.board_id
                 end),
-                :activity_find_options => { :include => { :board => :project } }
+                :activity_find_options => { :include => { :board => :project } },
+                :except => [:last_reply_id, :replies_count]
 
   acts_as_searchable :columns => ['subject', 'content'],
                      :include => {:board => :project},

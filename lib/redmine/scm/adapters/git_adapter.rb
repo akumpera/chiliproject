@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -11,17 +12,17 @@
 # See doc/COPYRIGHT.rdoc for more details.
 #++
 
-require 'redmine/scm/adapters/abstract_adapter'
+require_dependency 'redmine/scm/adapters/abstract_adapter'
 
 module Redmine
   module Scm
     module Adapters
       class GitAdapter < AbstractAdapter
 
-        SCM_GIT_REPORT_LAST_COMMIT = true
+        SCM_GIT_REPORT_LAST_COMMIT = true unless defined?(SCM_GIT_REPORT_LAST_COMMIT)
 
         # Git executable name
-        GIT_BIN = Redmine::Configuration['scm_git_command'] || "git"
+        GIT_BIN = Redmine::Configuration['scm_git_command'] || "git" unless defined?(GIT_BIN)
 
         # raised if scm command exited with error, e.g. unknown revision.
         class ScmCommandAborted < CommandFailed; end
@@ -175,7 +176,7 @@ module Redmine
           from_to << "#{identifier_from}.." if identifier_from
           from_to << "#{identifier_to}" if identifier_to
           cmd_args << from_to if !from_to.empty?
-          cmd_args << "--since=#{options[:since].strftime("%Y-%m-%d %H:%M:%S")}" if options[:since]
+          cmd_args << "--since='#{options[:since].strftime("%Y-%m-%d %H:%M:%S")}'" if options[:since]
           cmd_args << "--" << scm_iconv(@path_encoding, 'UTF-8', path) if path && !path.empty?
 
           scm_cmd *cmd_args do |io|

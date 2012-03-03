@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -474,7 +475,7 @@ EXPECTED
 RAW
 
     expected = <<-EXPECTED
-<pre><code class="ruby syntaxhl"><span class=\"CodeRay\"><span class="no">1</span> <span class="c"># Some ruby code here</span></span>
+<pre><code class="ruby syntaxhl"><span class=\"CodeRay\"><span class="line-numbers">1</span><span class="comment"># Some ruby code here</span></span>
 </code></pre>
 EXPECTED
 
@@ -592,7 +593,7 @@ RAW
 
 h1. Included
 
-{{include(Child_1)}}
+{% include 'Child_1' %}
 RAW
 
     expected = '<ul class="toc">' +

@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -37,7 +38,7 @@ class BuildInitialJournalsForActsAsJournalized < ActiveRecord::Migration
         activity_type = p.activity_provider_options.keys.first
 
         # Create initial journals
-        p.find(:all).each do |o|
+        p.find_each(:batch_size => 100 ) do |o|
           # Using rescue and save! here because either the Journal or the
           # touched record could fail. This will catch either error and continue
           begin

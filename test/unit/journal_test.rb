@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -44,7 +45,7 @@ class JournalTest < ActiveSupport::TestCase
     assert_equal 0, ActionMailer::Base.deliveries.size
     issue.reload
     issue.update_attribute(:subject, "New subject to trigger automatic journal entry")
-    assert_equal 1, ActionMailer::Base.deliveries.size
+    assert_equal 2, ActionMailer::Base.deliveries.size
   end
 
   def test_create_should_not_send_email_notification_if_told_not_to
@@ -113,5 +114,30 @@ class JournalTest < ActiveSupport::TestCase
 
     assert_equal "Test setting fields on Journal from Issue", @issue.last_journal.notes
     assert_equal @issue.author, @issue.last_journal.user
+  end
+
+  test "subclasses of journaled models should have journal of parent type" do
+    Ticket = Class.new(Issue)
+
+    project = Project.generate!
+    ticket = Ticket.new do |t|
+      t.project = project
+      t.subject = "Test initial journal"
+      t.tracker = project.trackers.first
+      t.author = User.generate!
+      t.description = "Some content"
+    end
+
+    begin
+      oldstdout = $stdout
+      $stdout = StringIO.new
+      ticket.save!
+      assert $stdout.string.empty?, "No errors should be logged to stdout."
+    ensure
+      $stdout = oldstdout
+    end
+
+    journal = ticket.journals.first
+    assert_equal IssueJournal, journal.class
   end
 end

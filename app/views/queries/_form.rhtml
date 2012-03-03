@@ -16,6 +16,18 @@
 <%= check_box_tag 'query_is_for_all', 1, @query.project.nil?,
       :disabled => (!@query.new_record? && (@query.project.nil? || (@query.is_public? && !User.current.admin?))) %></p>
 
+<p><label><%= l(:label_project_plural) %></label>
+  <label style="text-align: left; float: none; margin-left: 0px;font-weight: normal">
+    <%= radio_button_tag('display_subprojects', '0', !@query.display_subprojects?) %>
+    <%= l(:text_current_project) %>
+  </label>
+  <br />
+  <label style="text-align: left; float: none; margin-left: 0px;font-weight: normal">
+    <%= radio_button_tag('display_subprojects', '1', @query.display_subprojects?) %>
+    <%= l(:label_and_its_subprojects, :value => l(:text_current_project)) %>
+  </label>
+</p>
+
 <p><label for="query_default_columns"><%=l(:label_default_columns)%></label>
 <%= check_box_tag 'default_columns', 1, @query.has_default_columns?, :id => 'query_default_columns',
       :onclick => 'if (this.checked) {Element.hide("columns")} else {Element.show("columns")}' %></p>
@@ -30,10 +42,12 @@
 
 <fieldset><legend><%= l(:label_sort) %></legend>
 <% 3.times do |i| %>
-<%= i+1 %>: <%= select_tag("query[sort_criteria][#{i}][]",
-									options_for_select([[]] + query.available_columns.select(&:sortable?).collect {|column| [column.caption, column.name.to_s]}, @query.sort_criteria_key(i))) %>
-				    <%= select_tag("query[sort_criteria][#{i}][]",
-							    		  		options_for_select([[], [l(:label_ascending), 'asc'], [l(:label_descending), 'desc']], @query.sort_criteria_order(i))) %><br />
+<%= i+1 %>:
+<%= label_tag "query_sort_criteria_attribute_" + i.to_s, l(:description_query_sort_criteria_attribute), :class => "hidden-for-sighted" %>
+<%= select_tag("query[sort_criteria][#{i}][]", options_for_select([[]] + query.available_columns.select(&:sortable?).collect {|column| [column.caption, column.name.to_s]}, @query.sort_criteria_key(i)), :id => "query_sort_criteria_attribute_" + i.to_s)%>
+<%= label_tag "query_sort_criteria_direction_" + i.to_s, l(:description_query_sort_criteria_direction), :class => "hidden-for-sighted" %>
+<%= select_tag("query[sort_criteria][#{i}][]", options_for_select([[], [l(:label_ascending), 'asc'], [l(:label_descending), 'desc']], @query.sort_criteria_order(i)), :id => "query_sort_criteria_direction_" + i.to_s) %>
+<br />
 <% end %>
 </fieldset>
 

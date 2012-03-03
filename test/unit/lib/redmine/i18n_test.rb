@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -17,6 +18,7 @@ class Redmine::I18nTest < ActiveSupport::TestCase
   include ActionView::Helpers::NumberHelper
 
   def setup
+    super
     @hook_module = Redmine::Hook
   end
 
@@ -96,11 +98,11 @@ class Redmine::I18nTest < ActiveSupport::TestCase
 
   def test_utc_time_format
     set_language_if_valid 'en'
-    now = Time.now.utc
+    now = Time.now
     Setting.date_format = '%d %m %Y'
     Setting.time_format = '%H %M'
-    assert_equal Time.now.strftime('%d %m %Y %H %M'), format_time(now)
-    assert_equal Time.now.strftime('%H %M'), format_time(now, false)
+    assert_equal now.strftime('%d %m %Y %H %M'), format_time(now.utc)
+    assert_equal now.strftime('%H %M'), format_time(now.utc, false)
   end
 
   def test_number_to_human_size_for_each_language

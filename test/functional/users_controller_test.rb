@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -178,7 +179,7 @@ class UsersControllerTest < ActionController::TestCase
 
     mail = ActionMailer::Base.deliveries.last
     assert_not_nil mail
-    assert_equal [user.mail], mail.bcc
+    assert_equal [user.mail], mail.to
     assert mail.body.include?('secret')
   end
 
@@ -239,7 +240,7 @@ class UsersControllerTest < ActionController::TestCase
     assert u.reload.active?
     mail = ActionMailer::Base.deliveries.last
     assert_not_nil mail
-    assert_equal ['foo.bar@somenet.foo'], mail.bcc
+    assert_equal ['foo.bar@somenet.foo'], mail.to
     assert mail.body.include?(ll('fr', :notice_account_activated))
   end
 
@@ -253,7 +254,7 @@ class UsersControllerTest < ActionController::TestCase
 
     mail = ActionMailer::Base.deliveries.last
     assert_not_nil mail
-    assert_equal [u.mail], mail.bcc
+    assert_equal [u.mail], mail.to
     assert mail.body.include?('newpass')
   end
 
@@ -269,11 +270,43 @@ class UsersControllerTest < ActionController::TestCase
     assert u.check_password?('newpass')
   end
 
+  def test_destroy
+    u = User.new(:firstname => 'Death', :lastname => 'Row', :mail => 'death.row@example.com', :language => 'en')
+    u.login = 'death.row'
+    u.status = User::STATUS_REGISTERED
+    u.save!
+
+    delete :destroy, :id => u.id
+    assert_redirected_to :action => 'index'
+    # make sure that the user was actually destroyed
+    assert_raises(ActiveRecord::RecordNotFound) { u.reload }
+  end
+
+  def test_failing_destroy
+    u = User.new(:firstname => 'Surviving', :lastname => 'Patient', :mail => 'surviving.patient@example.com', :language => 'en')
+    u.login = 'surviving.patient'
+    u.status = User::STATUS_ACTIVE
+    u.save!
+
+    delete :destroy, :id => u.id
+    assert_response :forbidden
+    # make sure the user is still around
+    assert !u.reload.destroyed?
+  end
+
+
   def test_edit_membership
     post :edit_membership, :id => 2, :membership_id => 1,
                            :membership => { :role_ids => [2]}
     assert_redirected_to :action => 'edit', :id => '2', :tab => 'memberships'
     assert_equal [2], Member.find(1).role_ids
+  end
+
+
+  def test_new_membership_with_multiple_projects
+    assert_difference 'User.find(2).members.count', 2 do
+      post :edit_membership, :id => 2, :project_ids => [3,6], :membership => { :role_ids => ['1', '2']}
+    end
   end
 
   def test_destroy_membership

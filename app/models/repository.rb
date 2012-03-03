@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -197,6 +198,14 @@ class Repository < ActiveRecord::Base
   def repo_log_encoding
     encoding = log_encoding.to_s.strip
     encoding.blank? ? 'UTF-8' : encoding
+  end
+
+  # Provide a log encoding even if the column was not created yet
+  # It's used by 20100714111653_build_initial_journals_for_acts_as_journalized
+  # for initial journal creaetion of the changesets while the colum is only
+  # created by 20110228000000_add_repositories_log_encoding
+  def log_encoding
+    read_attribute(:log_encoding)
   end
 
   # Fetches new changesets for all repositories of active projects

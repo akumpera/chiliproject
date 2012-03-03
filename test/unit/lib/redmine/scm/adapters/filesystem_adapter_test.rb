@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -45,7 +46,7 @@ class FilesystemAdapterTest < ActiveSupport::TestCase
       assert_equal "TEST CAT\n", @adapter.cat("/test", 1)
     end
   else
-    puts "Filesystem test repository NOT FOUND. Skipping unit tests !!! See doc/RUNNING_TESTS."
+    should "Filesystem test repository not found."
     def test_fake; assert true end
   end
 end

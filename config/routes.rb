@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -86,6 +87,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Misc issue routes. TODO: move into resources
   map.auto_complete_issues '/issues/auto_complete', :controller => 'auto_completes', :action => 'issues'
+  map.auto_complete_users '/users/auto_complete', :controller => 'auto_completes', :action => 'users'
   map.preview_issue '/issues/preview/:id', :controller => 'previews', :action => 'issue' # TODO: would look nicer as /issues/:id/preview
   map.issues_context_menu '/issues/context_menu', :controller => 'context_menus', :action => 'issues'
   map.issue_changes '/issues/changes', :controller => 'journals', :action => 'index'
@@ -93,6 +95,7 @@ ActionController::Routing::Routes.draw do |map|
   map.bulk_update_issue 'issues/bulk_edit', :controller => 'issues', :action => 'bulk_update', :conditions => { :method => :post }
   map.quoted_issue '/issues/:id/quoted', :controller => 'journals', :action => 'new', :id => /\d+/, :conditions => { :method => :post }
   map.connect '/issues/:id/destroy', :controller => 'issues', :action => 'destroy', :conditions => { :method => :post } # legacy
+  map.journal_diff '/journals/:id/diff/:field', :controller => 'journals', :action => 'diff', :conditions => { :method => :get }
 
   map.resource :gantt, :path_prefix => '/issues', :controller => 'gantts', :only => [:show, :update]
   map.resource :gantt, :path_prefix => '/projects/:project_id/issues', :controller => 'gantts', :only => [:show, :update]
@@ -136,8 +139,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :member => {
     :edit_membership => :post,
     :destroy_membership => :post
-  },
-  :except => [:destroy]
+  }
 
   # For nice "roadmap" in the url for the index action
   map.connect 'projects/:project_id/roadmap', :controller => 'versions', :action => 'index'

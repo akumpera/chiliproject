@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -13,7 +14,7 @@
 require File.expand_path('../../test_helper', __FILE__)
 
 class DocumentTest < ActiveSupport::TestCase
-  fixtures :projects, :enumerations, :documents, :attachments
+  fixtures :all
 
   def test_create
     doc = Document.new(:project => Project.find(1), :title => 'New document', :category => Enumeration.find_by_name('User documentation'))
@@ -26,7 +27,7 @@ class DocumentTest < ActiveSupport::TestCase
     doc = Document.new(:project => Project.find(1), :title => 'New document', :category => Enumeration.find_by_name('User documentation'))
 
     assert doc.save
-    assert_equal 1, ActionMailer::Base.deliveries.size
+    assert_equal 2, ActionMailer::Base.deliveries.size
   end
 
   def test_create_with_default_category
@@ -50,4 +51,22 @@ class DocumentTest < ActiveSupport::TestCase
     assert d.attachments.empty?
     assert_equal d.created_on, d.updated_on
   end
+
+  should "allow watchers" do
+    assert Document.included_modules.include?(Redmine::Acts::Watchable::InstanceMethods)
+    assert Document.new.respond_to?(:add_watcher)
+  end
+
+  context "#recipients" do
+    should "include watchers" do
+      document = Document.generate!(:project => Project.find(1))
+      user = User.find(1)
+      assert document.add_watcher(user)
+
+      assert document.save
+
+      assert document.recipients.include?(user.mail), "Watcher not included in recipients"
+    end
+  end
+
 end

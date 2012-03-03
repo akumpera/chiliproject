@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -44,7 +45,7 @@ class TrackersControllerTest < ActionController::TestCase
     assert_redirected_to :action => 'index'
     tracker = Tracker.find_by_name('New tracker')
     assert_equal [1], tracker.project_ids.sort
-    assert_equal [1, 6], tracker.custom_field_ids
+    assert_equal [1, 6], tracker.custom_field_ids.sort
     assert_equal 0, tracker.workflows.count
   end
 

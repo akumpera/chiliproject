@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -109,7 +110,7 @@ class MessagesController < ApplicationController
     content = "#{ll(Setting.default_language, :text_user_wrote, user)}\\n> "
     content << text.to_s.strip.gsub(%r{<pre>((.|\s)*?)</pre>}m, '[...]').gsub('"', '\"').gsub(/(\r?\n|\r\n?)/, "\\n> ") + "\\n\\n"
     render(:update) { |page|
-      page << "$('reply_subject').value = \"#{subject}\";"
+      page << "$('message_subject').value = \"#{subject}\";"
       page.<< "$('message_content').value = \"#{content}\";"
       page.show 'reply'
       page << "Form.Element.focus('message_content');"

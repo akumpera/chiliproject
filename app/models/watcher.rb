@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -13,7 +14,7 @@
 
 class Watcher < ActiveRecord::Base
   belongs_to :watchable, :polymorphic => true
-  belongs_to :user
+  belongs_to :user, :class_name => 'Principal', :foreign_key => 'user_id'
 
   validates_presence_of :user
   validates_uniqueness_of :user_id, :scope => [:watchable_type, :watchable_id]

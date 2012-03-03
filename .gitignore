@@ -1,5 +1,14 @@
 /.project
 /.loadpath
+<<<<<<< HEAD
+=======
+/config/additional_environment.rb
+/config/configuration.yml
+/config/database.yml
+/config/email.yml
+/config/setup_load_paths.rb
+/config/initializers/session_store.rb
+>>>>>>> 900eda7a23dd3a6983f16d97283cfb9d2888f408
 /coverage
 /db/*.db
 /db/*.sqlite3
@@ -23,4 +32,9 @@ doc/app
 /Gemfile.lock
 /Gemfile.local
 /.rvmrc*
+<<<<<<< HEAD
 /.idea/*
+=======
+/*.iml
+/.idea
+>>>>>>> 900eda7a23dd3a6983f16d97283cfb9d2888f408

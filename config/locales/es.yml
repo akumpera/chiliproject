@@ -1,6 +1,6 @@
 # Spanish translations for Rails
 # by Francisco Fernando García Nieto (ffgarcianieto@gmail.com)
-# Redmine spanish translation:
+# ChiliProject spanish translation:
 # by J. Cayetano Delgado (Cayetano _dot_ Delgado _at_ ioko _dot_ com)
 
 es:
@@ -818,7 +818,7 @@ es:
   text_project_identifier_info: 'Only lower case letters (a-z), numbers, dashes and underscores are allowed.<br />Once saved, the identifier can not be changed.'
   text_reassign_time_entries: 'Reasignar las horas a esta petición:'
   text_regexp_info: ej. ^[A-Z0-9]+$
-  text_repository_usernames_mapping: "Establezca la correspondencia entre los usuarios de Redmine y los presentes en el log del repositorio.\nLos usuarios con el mismo nombre o correo en Redmine y en el repositorio serán asociados automáticamente."
+  text_repository_usernames_mapping: "Establezca la correspondencia entre los usuarios de ChiliProject y los presentes en el log del repositorio.\nLos usuarios con el mismo nombre o correo en ChiliProject y en el repositorio serán asociados automáticamente."
   text_rmagick_available: RMagick disponible (opcional)
   text_select_mail_notifications: Seleccionar los eventos a notificar
   text_select_project_modules: 'Seleccione los módulos a activar para este proyecto:'
@@ -1002,3 +1002,35 @@ es:
   text_mercurial_repo_example: local repository (e.g. /hgrepo, c:\hgrepo)
   label_diff: diff
   setting_issue_startdate_is_adddate: Use current date as start date for new issues
+  description_search: Searchfield
+  description_user_mail_notification: Mail notification settings
+  description_date_range_list: Choose range from list
+  description_date_to: Enter end date
+  description_query_sort_criteria_attribute: Sort attribute
+  description_message_content: Message content
+  description_wiki_subpages_reassign: Choose new parent page
+  description_available_columns: Available Columns
+  description_selected_columns: Selected Columns
+  description_date_range_interval: Choose range by selecting start and end date
+  description_project_scope: Search scope
+  description_issue_category_reassign: Choose issue category
+  description_query_sort_criteria_direction: Sort direction
+  description_notes: Notes
+  description_filter: Filter
+  description_choose_project: Projects
+  description_date_from: Enter start date
+  label_deleted_custom_field: (deleted custom field)
+  field_custom_filter: Custom LDAP filter
+  text_display_subprojects: Display subprojects
+  text_current_project: Current project
+  label_toc: Contents
+  search_input_placeholder: search ...
+  setting_mail_handler_confirmation_on_success: Send confirmation email on successful incoming email
+  label_mail_handler_confirmation: "Confirmation of email submission: %{subject}"
+  label_mail_handler_errors_with_submission: "There were errors with your email submission:"
+  label_document_watchers: Watchers
+  setting_mail_handler_confirmation_on_failure: Send confirmation email on failed incoming email
+  label_between: between
+  label_mail_handler_failure: "Failed email submission: %{subject}"
+  notice_not_authorized_action: You are not authorized to perform this action.
+  text_mail_handler_confirmation_successful: Your email has been successful added at the following url

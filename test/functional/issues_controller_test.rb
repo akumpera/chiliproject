@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -520,9 +521,8 @@ class IssuesControllerTest < ActionController::TestCase
     assert_equal [2, 3], issue.watcher_user_ids.sort
     assert issue.watched_by?(User.find(3))
     # Watchers notified
-    mail = ActionMailer::Base.deliveries.last
-    assert_kind_of TMail::Mail, mail
-    assert [mail.bcc, mail.cc].flatten.include?(User.find(3).mail)
+    recipients = ActionMailer::Base.deliveries.collect(&:to)
+    assert recipients.flatten.include?(User.find(3).mail)
   end
 
   def test_post_create_subissue
@@ -567,7 +567,7 @@ class IssuesControllerTest < ActionController::TestCase
     end
     assert_redirected_to :controller => 'issues', :action => 'show', :id => Issue.last.id
 
-    assert_equal 1, ActionMailer::Base.deliveries.size
+    assert_equal 2, ActionMailer::Base.deliveries.size
   end
 
   def test_post_create_should_preserve_fields_values_on_validation_failure
@@ -778,6 +778,22 @@ class IssuesControllerTest < ActionController::TestCase
                         :child => { :tag => 'option',
                                     :attributes => { :selected => 'selected', :value => TimeEntryActivity.first.id } }
     assert_tag :input, :attributes => { :name => 'time_entry[comments]', :value => 'test_get_edit_with_params' }
+  end
+
+  def test_get_edit_should_display_the_time_entry_form_with_log_time_permission
+    @request.session[:user_id] = 2
+    Role.find_by_name('Manager').update_attribute :permissions, [:view_issues, :edit_issues, :log_time]
+
+    get :edit, :id => 1
+    assert_tag 'input', :attributes => {:name => 'time_entry[hours]'}
+  end
+
+  def test_get_edit_should_not_display_the_time_entry_form_without_log_time_permission
+    @request.session[:user_id] = 2
+    Role.find_by_name('Manager').remove_permission! :log_time
+
+    get :edit, :id => 1
+    assert_no_tag 'input', :attributes => {:name => 'time_entry[hours]'}
   end
 
   def test_update_edit_form
@@ -1000,7 +1016,7 @@ class IssuesControllerTest < ActionController::TestCase
                                      :priority_id => '6',
                                      :category_id => '1' # no change
                                     }
-    assert_equal 1, ActionMailer::Base.deliveries.size
+    assert_equal 2, ActionMailer::Base.deliveries.size
   end
 
   def test_put_update_should_not_send_a_notification_if_send_notification_is_off
@@ -1223,7 +1239,7 @@ class IssuesControllerTest < ActionController::TestCase
          })
 
     assert_response 302
-    assert_equal 2, ActionMailer::Base.deliveries.size
+    assert_equal 5, ActionMailer::Base.deliveries.size
   end
 
   def test_bulk_update_status
@@ -1373,9 +1389,9 @@ class IssuesControllerTest < ActionController::TestCase
 
   def test_default_search_scope
     get :index
-    assert_tag :div, :attributes => {:id => 'quick-search'},
-                     :child => {:tag => 'form',
-                                :child => {:tag => 'input', :attributes => {:name => 'issues', :type => 'hidden', :value => '1'}}}
+    assert_select "#search form" do
+      assert_select "input[type=hidden][name=issues][value=1]"
+    end
   end
 
   def test_reply_to_note

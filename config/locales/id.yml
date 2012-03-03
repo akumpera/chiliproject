@@ -836,7 +836,7 @@ id:
   text_enumeration_destroy_question: "%{count} obyek ditugaskan untuk nilai ini."
   text_enumeration_category_reassign_to: 'Tugaskan kembali untuk nilai ini:'
   text_email_delivery_not_configured: "Pengiriman email belum dikonfigurasi, notifikasi tidak diaktifkan.\nAnda harus mengkonfigur SMTP server anda pada config/configuration.yml dan restart kembali aplikasi untuk mengaktifkan."
-  text_repository_usernames_mapping: "Pilih atau perbarui pengguna Redmine yang terpetakan ke setiap nama pengguna yang ditemukan di log repositori.\nPengguna dengan nama pengguna dan repositori atau email yang sama  secara otomasit akan dipetakan."
+  text_repository_usernames_mapping: "Pilih atau perbarui pengguna ChiliProject yang terpetakan ke setiap nama pengguna yang ditemukan di log repositori.\nPengguna dengan nama pengguna dan repositori atau email yang sama  secara otomasit akan dipetakan."
   text_diff_truncated: '... Perbedaan terpotong karena melebihi batas maksimum yang bisa ditampilkan.'
   text_custom_field_possible_values_info: 'Satu baris untuk setiap nilai'
   text_wiki_page_destroy_question: "Halaman ini mempunyai %{descendants} halaman anak dan turunannya. Apa yang akan anda lakukan ?"
@@ -973,3 +973,35 @@ id:
   text_mercurial_repo_example: local repository (e.g. /hgrepo, c:\hgrepo)
   label_diff: diff
   setting_issue_startdate_is_adddate: Use current date as start date for new issues
+  description_search: Searchfield
+  description_user_mail_notification: Mail notification settings
+  description_date_range_list: Choose range from list
+  description_date_to: Enter end date
+  description_query_sort_criteria_attribute: Sort attribute
+  description_message_content: Message content
+  description_wiki_subpages_reassign: Choose new parent page
+  description_available_columns: Available Columns
+  description_selected_columns: Selected Columns
+  description_date_range_interval: Choose range by selecting start and end date
+  description_project_scope: Search scope
+  description_issue_category_reassign: Choose issue category
+  description_query_sort_criteria_direction: Sort direction
+  description_notes: Notes
+  description_filter: Filter
+  description_choose_project: Projects
+  description_date_from: Enter start date
+  label_deleted_custom_field: (deleted custom field)
+  field_custom_filter: Custom LDAP filter
+  text_display_subprojects: Display subprojects
+  text_current_project: Current project
+  label_toc: Contents
+  search_input_placeholder: search ...
+  setting_mail_handler_confirmation_on_success: Send confirmation email on successful incoming email
+  label_mail_handler_confirmation: "Confirmation of email submission: %{subject}"
+  label_mail_handler_errors_with_submission: "There were errors with your email submission:"
+  label_document_watchers: Watchers
+  setting_mail_handler_confirmation_on_failure: Send confirmation email on failed incoming email
+  label_between: between
+  label_mail_handler_failure: "Failed email submission: %{subject}"
+  notice_not_authorized_action: You are not authorized to perform this action.
+  text_mail_handler_confirmation_successful: Your email has been successful added at the following url

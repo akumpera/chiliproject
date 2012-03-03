@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -73,7 +74,7 @@ class AdminControllerTest < ActionController::TestCase
     mail = ActionMailer::Base.deliveries.last
     assert_kind_of TMail::Mail, mail
     user = User.find(1)
-    assert_equal [user.mail], mail.bcc
+    assert_equal [user.mail], mail.to
   end
 
   def test_no_plugins

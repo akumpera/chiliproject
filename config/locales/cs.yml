@@ -904,7 +904,7 @@ cs:
   text_enumeration_destroy_question: "Několik (%{count}) objektů je přiřazeno k této hodnotě."
   text_enumeration_category_reassign_to: 'Přeřadit je do této:'
   text_email_delivery_not_configured: "Doručování e-mailů není nastaveno a odesílání notifikací je zakázáno.\nNastavte Váš SMTP server v souboru config/email.yml a restartujte aplikaci."
-  text_repository_usernames_mapping: "Vybrat nebo upravit mapování mezi Redmine uživateli a uživatelskými jmény nalezenými v logu repozitáře.\nUživatelé se shodným Redmine uživatelským jménem a uživatelským jménem v repozitáři jsou mapovaní automaticky."
+  text_repository_usernames_mapping: "Vybrat nebo upravit mapování mezi ChiliProject uživateli a uživatelskými jmény nalezenými v logu repozitáře.\nUživatelé se shodným ChiliProject uživatelským jménem a uživatelským jménem v repozitáři jsou mapovaní automaticky."
   text_diff_truncated: '... Rozdílový soubor je zkrácen, protože jeho délka přesahuje max. limit.'
   text_custom_field_possible_values_info: 'Každá hodnota na novém řádku'
   text_wiki_page_destroy_question: Tato stránka má %{descendants} podstránek a potomků. Co chcete udělat?
@@ -1015,7 +1015,7 @@ cs:
   permission_edit_own_issue_notes: Upravování vlastních poznámek
   setting_gravatar_enabled: Použít uživatelské ikony Gravatar
   label_example: Příklad
-  text_repository_usernames_mapping: "Vybrat nebo upravit mapování mezi Redmine uživateli a uživatelskými jmény nalezenými v logu repozitáře.\nUživatelé se shodným Redmine uživatelským jménem a uživatelským jménem v repozitáři jsou mapovaní automaticky."
+  text_repository_usernames_mapping: "Vybrat nebo upravit mapování mezi ChiliProject uživateli a uživatelskými jmény nalezenými v logu repozitáře.\nUživatelé se shodným ChiliProject uživatelským jménem a uživatelským jménem v repozitáři jsou mapovaní automaticky."
   permission_edit_own_messages: Upravit vlastní zprávy
   permission_delete_own_messages: Smazat vlastní zprávy
   label_user_activity: "Aktivita uživatele: %{value}"
@@ -1189,3 +1189,35 @@ cs:
   text_mercurial_repo_example: local repository (e.g. /hgrepo, c:\hgrepo)
   label_diff: diff
   setting_issue_startdate_is_adddate: Use current date as start date for new issues
+  description_search: Searchfield
+  description_user_mail_notification: Mail notification settings
+  description_date_range_list: Choose range from list
+  description_date_to: Enter end date
+  description_query_sort_criteria_attribute: Sort attribute
+  description_message_content: Message content
+  description_wiki_subpages_reassign: Choose new parent page
+  description_available_columns: Available Columns
+  description_selected_columns: Selected Columns
+  description_date_range_interval: Choose range by selecting start and end date
+  description_project_scope: Search scope
+  description_issue_category_reassign: Choose issue category
+  description_query_sort_criteria_direction: Sort direction
+  description_notes: Notes
+  description_filter: Filter
+  description_choose_project: Projects
+  description_date_from: Enter start date
+  label_deleted_custom_field: (deleted custom field)
+  field_custom_filter: Custom LDAP filter
+  text_display_subprojects: Display subprojects
+  text_current_project: Current project
+  label_toc: Contents
+  search_input_placeholder: search ...
+  setting_mail_handler_confirmation_on_success: Send confirmation email on successful incoming email
+  label_mail_handler_confirmation: "Confirmation of email submission: %{subject}"
+  label_mail_handler_errors_with_submission: "There were errors with your email submission:"
+  label_document_watchers: Watchers
+  setting_mail_handler_confirmation_on_failure: Send confirmation email on failed incoming email
+  label_between: between
+  label_mail_handler_failure: "Failed email submission: %{subject}"
+  notice_not_authorized_action: You are not authorized to perform this action.
+  text_mail_handler_confirmation_successful: Your email has been successful added at the following url

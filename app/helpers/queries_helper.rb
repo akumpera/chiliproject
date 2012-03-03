@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -83,11 +84,12 @@ module QueriesHelper
           end
         end
         @query.group_by = params[:group_by]
+        @query.display_subprojects = params[:display_subprojects] if params[:display_subprojects]
         @query.column_names = params[:c] || (params[:query] && params[:query][:column_names])
-        session[:query] = {:project_id => @query.project_id, :filters => @query.filters, :group_by => @query.group_by, :column_names => @query.column_names}
+        session[:query] = {:project_id => @query.project_id, :filters => @query.filters, :group_by => @query.group_by, :column_names => @query.column_names, :display_subprojects => @query.display_subprojects}
       else
         @query = Query.find_by_id(session[:query][:id]) if session[:query][:id]
-        @query ||= Query.new(:name => "_", :project => @project, :filters => session[:query][:filters], :group_by => session[:query][:group_by], :column_names => session[:query][:column_names])
+        @query ||= Query.new(:name => "_", :project => @project, :filters => session[:query][:filters], :group_by => session[:query][:group_by], :column_names => session[:query][:column_names], :display_subprojects => session[:query][:display_subprojects])
         @query.project = @project
       end
     end

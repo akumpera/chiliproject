@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -47,5 +48,14 @@ class ApplicationTest < ActionController::IntegrationTest
     get "issues/4.atom?key=#{rss_key}"
     assert_response 200
     assert_nil session[:user_id]
+  end
+
+  def test_always_use_custom_404
+    get 'something_not_existing'
+    assert_response :not_found
+
+    assert_tag :tag => 'p',
+      :attributes => {:id => 'errorExplanation'},
+      :content => "The page you were trying to access doesn't exist or has been removed."
   end
 end

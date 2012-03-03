@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -21,7 +22,7 @@ class TabularFormBuilder < ActionView::Helpers::FormBuilder
     super
   end
 
-  (field_helpers - %w(radio_button hidden_field fields_for) + %w(date_select)).each do |selector|
+  (field_helpers.map(&:to_s) - %w(radio_button hidden_field fields_for) + %w(date_select)).each do |selector|
     src = <<-END_SRC
     def #{selector}(field, options = {})
       label_for_field(field, options) + super

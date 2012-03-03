@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -10,6 +11,8 @@
 #
 # See doc/COPYRIGHT.rdoc for more details.
 #++
+
+require 'diff'
 
 class JournalsController < ApplicationController
   before_filter :find_journal, :only => [:edit, :diff]
@@ -83,6 +86,22 @@ class JournalsController < ApplicationController
     end
   end
 
+  def diff
+    if valid_field?(params[:field])
+      from = @journal.changes[params[:field]][0]
+      to = @journal.changes[params[:field]][1]
+
+      @diff = Redmine::Helpers::Diff.new(to, from)
+      @issue = @journal.journaled
+      respond_to do |format|
+        format.html { }
+        format.js { render :layout => false }
+      end
+    else
+      render_404
+    end
+  end
+
   private
 
   def find_journal
@@ -98,5 +117,10 @@ class JournalsController < ApplicationController
     @project = @issue.project
   rescue ActiveRecord::RecordNotFound
     render_404
+  end
+
+  # Is this a valid field for diff'ing?
+  def valid_field?(field)
+    field.to_s.strip == "description"
   end
 end

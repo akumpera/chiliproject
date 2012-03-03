@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -13,6 +14,9 @@
 require File.expand_path('../../../../test_helper', __FILE__)
 
 class Redmine::ThemesTest < ActiveSupport::TestCase
+  def setup
+    Redmine::Themes.rescan
+  end
 
   def test_themes
     themes = Redmine::Themes.themes

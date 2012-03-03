@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -42,10 +43,31 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # FIXME: Remove this when all of Rack and Rails have learned how to
+  # properly use encodings
+  before_filter :params_filter
+  def params_filter
+    self.utf8nize!(params) if RUBY_VERSION >= '1.9'
+  end
+  def utf8nize!(obj)
+    if obj.is_a? String
+      obj.respond_to?(:force_encoding) ? obj.force_encoding("UTF-8") : obj
+    elsif obj.is_a? Hash
+      obj.each {|k, v| obj[k] = self.utf8nize!(v)}
+    elsif obj.is_a? Array
+      obj.each {|v| self.utf8nize!(v)}
+    else
+      obj
+    end
+  end
+
   before_filter :user_setup, :check_if_login_required, :set_localization
   filter_parameter_logging :password
 
   rescue_from ActionController::InvalidAuthenticityToken, :with => :invalid_authenticity_token
+  # FIXME: This doesn't work with Rails >= 3.0 anymore
+  # Possible workaround: https://github.com/rails/rails/issues/671#issuecomment-1780159
+  rescue_from ActionController::RoutingError, :with => proc{render_404}
 
   include Redmine::Search::Controller
   include Redmine::MenuManager::MenuController
@@ -56,8 +78,6 @@ class ApplicationController < ActionController::Base
   end
 
   def user_setup
-    # Check the settings cache for each request
-    Setting.check_cache
     # Find the current user
     User.current = find_current_user
   end
@@ -262,7 +282,7 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_back_or_default(default)
-    back_url = CGI.unescape(params[:back_url].to_s)
+    back_url = URI.escape(CGI.unescape(params[:back_url].to_s))
     if !back_url.blank?
       begin
         uri = URI.parse(back_url)

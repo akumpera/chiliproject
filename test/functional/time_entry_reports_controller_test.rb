@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -126,6 +126,14 @@ class TimeEntryReportsControllerTest < ActionController::TestCase
     assert_template 'report'
     assert_not_nil assigns(:total_hours)
     assert_equal "0.00", "%.2f" % assigns(:total_hours)
+  end
+
+  def test_report_status_criterion
+    get :report, :project_id => 1, :criterias => ['status']
+    assert_response :success
+    assert_template 'report'
+    assert_tag :tag => 'th', :content => 'Status'
+    assert_tag :tag => 'td', :content => 'New'
   end
 
   def test_report_all_projects_csv_export

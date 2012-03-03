@@ -658,6 +658,7 @@ de:
   label_roadmap_overdue: "%{value} verspätet"
   label_roadmap_no_issues: Keine Tickets für diese Version
   label_search: Suche
+  search_input_placeholder: Suche ...
   label_result_plural: Resultate
   label_all_words: Alle Wörter
   label_wiki: Wiki
@@ -798,6 +799,7 @@ de:
   label_project_copy_notifications: Sende Mailbenachrichtigungen beim Kopieren des Projekts.
   label_principal_search: "Nach Benutzer oder Gruppe suchen:"
   label_user_search: "Nach Benutzer suchen:"
+  label_deleted_custom_field: '(gelöschtes benutzerdefiniertes Feld)'
 
   button_login: Anmelden
   button_submit: OK
@@ -869,7 +871,7 @@ de:
   text_tip_issue_begin_day: Aufgabe, die an diesem Tag beginnt
   text_tip_issue_end_day: Aufgabe, die an diesem Tag endet
   text_tip_issue_begin_end_day: Aufgabe, die an diesem Tag beginnt und endet
-  text_project_identifier_info: 'Kleinbuchstaben (a-z), Ziffern, Binde- und Unterstriche erlaubt.<br />Einmal gespeichert, kann die Kennung nicht mehr geändert werden.'
+  text_project_identifier_info: 'Kleinbuchstaben (a-z), Ziffern, Binde- und Unterstriche erlaubt, muss mit einem Kleinbuchstaben beginnen.<br />Einmal gespeichert, kann die Kennung nicht mehr geändert werden.'
   text_caracters_maximum: "Max. %{count} Zeichen."
   text_caracters_minimum: "Muss mindestens %{count} Zeichen lang sein."
   text_length_between: "Länge zwischen %{min} und %{max} Zeichen."
@@ -902,7 +904,7 @@ de:
   text_enumeration_destroy_question: "%{count} Objekt(e) sind diesem Wert zugeordnet."
   text_enumeration_category_reassign_to: 'Die Objekte stattdessen diesem Wert zuordnen:'
   text_email_delivery_not_configured: "Der SMTP-Server ist nicht konfiguriert und Mailbenachrichtigungen sind ausgeschaltet.\nNehmen Sie die Einstellungen für Ihren SMTP-Server in config/configuration.yml vor und starten Sie die Applikation neu."
-  text_repository_usernames_mapping: "Bitte legen Sie die Zuordnung der Redmine-Benutzer zu den Benutzernamen der Commit-Log-Meldungen des Projektarchivs fest.\nBenutzer mit identischen Redmine- und Projektarchiv-Benutzernamen oder -E-Mail-Adressen werden automatisch zugeordnet."
+  text_repository_usernames_mapping: "Bitte legen Sie die Zuordnung der ChiliProject-Benutzer zu den Benutzernamen der Commit-Log-Meldungen des Projektarchivs fest.\nBenutzer mit identischen ChiliProject- und Projektarchiv-Benutzernamen oder -E-Mail-Adressen werden automatisch zugeordnet."
   text_diff_truncated: '... Dieser Diff wurde abgeschnitten, weil er die maximale Anzahl anzuzeigender Zeilen überschreitet.'
   text_custom_field_possible_values_info: 'Eine Zeile pro Wert'
   text_wiki_page_destroy_question: "Diese Seite hat %{descendants} Unterseite(n). Was möchten Sie tun?"
@@ -982,3 +984,33 @@ de:
   label_path_encoding: Path encoding
   text_mercurial_repo_example: local repository (e.g. /hgrepo, c:\hgrepo)
   label_diff: diff
+  description_filter: Filter
+  description_search: Suchfeld
+  description_choose_project: Projekte
+  description_project_scope: Suchbereich
+  description_notes: Kommentare
+  description_message_content: Nachrichteninhalt
+  description_query_sort_criteria_attribute: Sortierattribut
+  description_query_sort_criteria_direction: Sortierrichtung
+  description_user_mail_notification: Mailbenachrichtigungseinstellung
+  description_available_columns: Verfügbare Spalten
+  description_selected_columns: Ausgewählte Spalten
+  description_issue_category_reassign: Neue Kategorie wählen
+  description_wiki_subpages_reassign: Neue Elternseite wählen
+  description_date_range_list: Zeitraum aus einer Liste wählen
+  description_date_range_interval: Zeitraum durch Start- und Enddatum festlegen
+  description_date_from: Startdatum eintragen
+  description_date_to: Enddatum eintragen
+  field_custom_filter: Custom LDAP filter
+  label_toc: "Inhaltsverzeichnis"
+  text_display_subprojects: Display subprojects
+  text_current_project: Current project
+  setting_mail_handler_confirmation_on_success: Send confirmation email on successful incoming email
+  label_mail_handler_confirmation: "Confirmation of email submission: %{subject}"
+  label_mail_handler_errors_with_submission: "There were errors with your email submission:"
+  label_document_watchers: Watchers
+  setting_mail_handler_confirmation_on_failure: Send confirmation email on failed incoming email
+  label_between: between
+  label_mail_handler_failure: "Failed email submission: %{subject}"
+  notice_not_authorized_action: You are not authorized to perform this action.
+  text_mail_handler_confirmation_successful: Your email has been successful added at the following url

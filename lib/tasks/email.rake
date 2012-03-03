@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -139,6 +140,7 @@ Available POP3 options:
   username=USERNAME        POP3 account
   password=PASSWORD        POP3 password
   apop=1                   use APOP authentication (default: false)
+  ssl=SSL                  Use SSL? (default: false)
   delete_unprocessed=1     delete messages that could not be processed
                            successfully from the server (default
                            behaviour is to leave them on the server)
@@ -150,6 +152,7 @@ END_DESC
       pop_options  = {:host => ENV['host'],
                       :port => ENV['port'],
                       :apop => ENV['apop'],
+                      :ssl => ENV['ssl'],
                       :username => ENV['username'],
                       :password => ENV['password'],
                       :delete_unprocessed => ENV['delete_unprocessed']}

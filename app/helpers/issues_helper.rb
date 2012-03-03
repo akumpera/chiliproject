@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -51,13 +52,14 @@ module IssuesHelper
       "<strong>#{@cached_label_priority}</strong>: #{h(issue.priority.name)}"
   end
 
+  # TODO: deprecate and/or remove
   def render_issue_subject_with_tree(issue)
     s = ''
     ancestors = issue.root? ? [] : issue.ancestors.all
     ancestors.each do |ancestor|
-      s << '<div>' + content_tag('p', link_to_issue(ancestor))
+      s << '<div>' + content_tag('h2', link_to_issue(ancestor))
     end
-    s << '<div>' + content_tag('h3', h(issue.subject))
+    s << '<div class="subject">' + content_tag('h2', h(issue.subject))
     s << '</div>' * (ancestors.size + 1)
     s
   end
@@ -213,8 +215,8 @@ module IssuesHelper
   def send_notification_option
     content_tag(:p,
                 content_tag(:label,
-                            l(:label_notify_member_plural)) +
-                hidden_field_tag('send_notification', '0') +
+                            l(:label_notify_member_plural), :for => 'send_notification') +
+                hidden_field_tag('send_notification', '0', :id => nil) +
                 check_box_tag('send_notification', '1', true))
 
 

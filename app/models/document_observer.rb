@@ -1,7 +1,8 @@
+#-- encoding: UTF-8
 #-- copyright
 # ChiliProject is a project management system.
 #
-# Copyright (C) 2010-2011 the ChiliProject Team
+# Copyright (C) 2010-2012 the ChiliProject Team
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -13,6 +14,10 @@
 
 class DocumentObserver < ActiveRecord::Observer
   def after_create(document)
-    Mailer.deliver_document_added(document) if Setting.notified_events.include?('document_added')
+    if Setting.notified_events.include?('document_added')
+      document.recipients.each do |recipient|
+        Mailer.deliver_document_added(document, recipient)
+      end
+    end
   end
 end
